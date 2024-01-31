@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+.menu ul a {
+	color: black;
+	font-style: italic;
+	font-weight: bold;
+	font-size: 18px;
+	text-align: center;
+	line-height: 50px; /* border-bottom: 1px solid gray; */
+	text-decoration: none;
+}
+
+.menu ul li {
+	list-style: none;
+	border-bottom: 1px solid black;
+}
+
+.left {
+	background: #FFF7D8;
+	width: 120px;
+	height: auto;
+	box-sizing: content-box;
+	border: 1px solid black;
+}
+
+.menu ul a:hover {
+	color: purple;
+}
+
+.menu li {
+	margin: 15px 5px;
+}

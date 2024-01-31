@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="l">
+<!-- mapper : DB에 쿼리문을 요청하고 결과를 돌려받는 속성파일 -->
+
+<insert id="addLike" parameterType="java.util.HashMap">
+	INSERT INTO LIKE_LIST VALUES (LIKE_LIST_IDX.NEXTVAL,#{idx},#{goods_idx},#{content},#{goods_name})
+</insert>	
+
+<select id="viewLike" parameterType="int" resultType="String">
+	SELECT L_IMAGE FROM LIKE_LIST WHERE IDX=#{idx}
+</select>
+
+<select id="list" parameterType="int" resultType="vo.AddLikeVO">
+	SELECT * FROM LIKE_LIST WHERE U_IDX = #{idx}
+</select>
+
+<delete id="delLike" parameterType="int">
+	DELETE FROM LIKE_LIST WHERE IDX=#{idx}
+</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="t">
+<!-- mapper : DB에 쿼리문을 요청하고 결과를 돌려받는 속성파일 -->
+
+	<select id="category_list" resultType="category">
+		SELECT * FROM TITLE_BUTTON
+	</select>
+	
+	<select id="category_title_name" resultType="String" parameterType="int">
+	SELECT CATEGORY FROM TITLE_BUTTON WHERE IDX = #{idx}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

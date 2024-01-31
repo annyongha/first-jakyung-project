@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+table {
+	border-collapse: collapse;
+}
+
+#mainContent {
+	margin-bottom: 30px;
+}
+
+.category table{
+	border: 1px solid black;
+	text-align: center;
+}
+
+.category table th {
+	border-right: 1px solid black; 
+}
+
+
+
+.faq_contents{
+	display: none;
+}
+
+#mainContent {
+	width: 90%;
+	margin-left: 10px;
+	position: relative;
+}
+
+#mainContent table {
+	text-align: center;
+	margin: 10px auto;
+}
+#mainContent table td{
+	text-align: left;
+}
+#mainContent .category table th{
+	width: 180px;
+	overflow: hidden;
+}
+#mainContent .category a:hover{
+	background-color: pink;
+}
+#mainContent .faq table th:first-child {
+	width: 120px;
+}
+#mainContent .faq table th:nth-child(2) {
+	width: 700px;
+}
+
+#mainContent a {
+	margin: 10px;
+	padding: 5px;
+}
+
+#leftNavi {
+	margin-left: 10px;
+	width: 10%;
+}
+
+.product {
+	width: auto;
+	margin: 10px auto;
+	padding-left: 80px; 
+}
+
+.paging {
+	text-align: center;
+	bottom: 0px;
+	margin: 20px auto;
+}
+
+#mainContent .paging a{
+	margin: 5px;
+	display: inline-block;
+
+}
+
+.bolder {
+	font-weight: bold;
+	background-color: red;
+	border-radius: 10px;
+}
+.faq_contents{
+	text-align: left;
+}

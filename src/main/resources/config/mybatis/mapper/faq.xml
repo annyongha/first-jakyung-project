@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="f">
+	<!-- mapper : DB에 쿼리문을 요청하고 결과를 돌려받는 속성파일 -->
+
+	<!-- faq 전체 테이블 조회 -->
+	<select id="faq_list" resultType="vo.FaqVO">
+		SELECT
+		IDX,CATEGORY_TITLE,TITLE,CONTENT
+		FROM (SELECT r1.*,RANK() OVER(ORDER BY IDX DESC) AS "RANK2" FROM (SELECT
+		f.*,RANK() OVER(ORDER BY CATEGORY
+		DESC) AS "RANK" FROM FAQ f) r1)
+		WHERE
+		"RANK2" BETWEEN #{minData} AND #{maxData}
+	</select>
+	<!-- faq 전체 데이터 개수 조회 -->
+	<select id="faqTotalCount" resultType="int">
+		SELECT COUNT(*) FROM FAQ
+	</select>
+
+	<!-- faq 데이터 삭제 -->
+	<delete id="delteFaqData" parameterType="int">
+		DELETE FROM FAQ WHERE IDX = #{deleteIdx}
+	</delete>
+
+	<!-- faq 타입별 전체 데이터 개수 조회 -->
+	<select id="type_faq_list_Count" resultType="int">
+		SELECT COUNT(*) FROM FAQ WHERE CATEGORY = #{type}
+	</select>
+
+	<!-- faq 타입별 전체 데이터 조회 -->
+	<select id="type_faq_list" parameterType="java.util.HashMap" resultType="vo.FaqVO">
+		SELECT IDX,MEMBER_ID,CATEGORY,CATEGORY_TITLE,TITLE,CONTENT
+		FROM (SELECT f2.*,RANK() OVER(ORDER BY IDX) AS "RANK2" FROM (SELECT
+		f.*,RANK() OVER(ORDER BY CATEGORY_TITLE ASC) AS "RANK" FROM FAQ f
+		WHERE CATEGORY = #{type}) f2 ORDER BY "RANK" ASC, "RANK2" ASC)
+		WHERE "RANK" BETWEEN #{minData} AND #{maxData}
+	</select>
+	
+	<!-- faq 수정 전 기존 데이터 조회 -->
+	<select id="faqUpdateSelect" parameterType="int" resultType="vo.FaqVO">
+	SELECT * FROM FAQ WHERE IDX = #{idx}
+	</select>
+	
+	<update id="faqUpdate" parameterType="vo.FaqVO">
+	UPDATE FAQ SET CATEGORY = #{category},CATEGORY_TITLE = #{category_title},TITLE = #{title},CONTENT = #{content} WHERE  IDX = #{idx}
+	</update>
+	
+	<insert id="faqInsert" parameterType="vo.FaqVO">
+INSERT INTO FAQ VALUES(
+	FAQ_IDX.NEXTVAL,
+	#{member_id},
+	#{category},
+	#{category_title},
+	#{title},
+	#{content},
+	1,
+	1
+)
+	</insert>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

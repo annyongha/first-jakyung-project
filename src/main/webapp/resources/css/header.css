@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+#headerLogo{
+	float:left;
+	width: 5%;
+}
+
+#header {
+	overflow: auto;
+}
+#header span{
+	display : inline-block;
+	height: 80px;
+	font-size: 20px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#allHeaderNavi {
+	width : auto;
+	display:flex;
+	flex-direction: column-reverse;
+}
+#MemberNavi {
+	height: 40px;
+	float: right;
+}
+
+#allHeaderNavi li:hover{
+	background-color: pink;
+	border-radius: 4px;
+}
+#allHeaderNavi li:hover a{
+	color: white;
+}
+
+#MemberNavi li {
+	float: right;
+}
+	
+#menuNavi li {
+	
+	float: left;
+}
+#header ol li{
+	margin: 5px;
+}
+#header ol li a{
+		text-decoration: none;
+		color : black;
+		font-weight: bold;
+}
+#memberMenuButton{
+	text-align: right;
+}
+
+
+ 

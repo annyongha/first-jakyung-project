@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="r">
+	<!-- mapper : DB에 쿼리문을 요청하고 결과를 돌려받는 속성파일 -->
+
+	<!-- 최근페이지 조회 -->
+	<select id="select_list" resultType="recently"
+		parameterType="int">
+		SELECT IDX, USER_IDX, GOODS_IDX,
+		ROW_NUMBER() OVER (ORDER BY IDX DESC) AS "RANK"
+		FROM RECENT_VIEW
+		WHERE USER_IDX = #{user_idx}
+		ORDER BY "RANK"
+	</select>
+
+	<!-- 최근페이지 저장 -->
+	<insert id="recent_page_insert"
+		parameterType="java.util.HashMap">
+		INSERT INTO RECENT_VIEW
+		values(RECENT_VIEW_IDX.NEXTVAL,#{u_id},#{g_id})
+	</insert>
+
+	<!-- 최근페이지 개수 조회 -->
+	<select id="recent_page_count" parameterType="int"
+		resultType="int">
+		SELECT COUNT(*) FROM RECENT_VIEW WHERE USER_IDX = #{idx}
+	</select>
+
+	<!-- 최근페이지 개수가 일정 개수 이상일때 오래된 목록 삭제 -->
+	<delete id="recent_page_delete" parameterType="int">
+		DELETE FROM
+		RECENT_VIEW
+		WHERE IDX IN (
+		SELECT IDX
+		FROM (
+		SELECT IDX, USER_IDX,
+		GOODS_IDX, ROW_NUMBER() OVER (ORDER BY IDX ASC) AS
+		"RANK"
+		FROM
+		RECENT_VIEW
+		WHERE USER_IDX = #{idx}
+		)
+		WHERE "RANK" = 1
+		)
+	</delete>
+
+	<!-- 최근 본 페이지가 db에 저장되어있는지 조회 -->
+	<select id="recent_existCheck" parameterType="java.util.HashMap"
+		resultType="int">
+		SELECT COUNT(*) FROM RECENT_VIEW 
+		WHERE USER_IDX = #{u_id} AND GOODS_IDX = #{g_id}
+	</select>
+
+	<!-- 최근 페이지에 최근 본 페이지가 존재 할때 삭제 -->
+	<delete id="recent_exist_delete"
+		parameterType="java.util.HashMap">
+		DELETE FROM RECENT_VIEW WHERE USER_IDX = #{u_id} AND GOODS_IDX = #{g_id}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="m">
+<!-- mapper : DB에 쿼리문을 요청하고 결과를 돌려받는 속성파일 -->
+
+	<select id="check_email" resultType="int" parameterType="String">
+		select count(*) from member where EMAIL=#{email}
+	</select>
+	
+	<insert id="member_insert" parameterType="member">
+	insert into member values(seq_member_idx.nextval,
+							 #{nickname},
+							 #{name},
+							 #{jumin},
+							 #{rank},
+							 #{pwd},
+							 #{gen},
+							 #{postcode},
+							 #{addr},
+							 #{email},
+							 #{tel},
+							 #{hobby},
+							 #{question},
+							 #{answer},
+							 #{corpaddr})
+	</insert>
+	
+	<select id="loginCheck" resultType="vo.MemberVO" parameterType="String">
+		select * from member where email=#{email}
+	</select>
+	
+	<select id="login_idCheck" resultType="vo.MemberVO" parameterType="String">
+		select * from member where jumin=#{jumin}
+	</select>
+	
+	<select id="pwd_idCheck" resultType="vo.MemberVO" parameterType="String">
+		select * from member where email=#{email}
+	</select>
+	
+	<select id="nickname" resultType="vo.MemberVO" parameterType="String"> 
+	SELECT * FROM member WHERE nickname=#{nickname} 
+	</select>
+	
+	<select id="tel_find" resultType="vo.MemberVO" parameterType="String"> 
+	SELECT * FROM member WHERE tel=#{tel} 
+	</select>
+	
+	<delete id="member_delete" parameterType="int">
+		DELETE FROM MEMBER WHERE
+		IDX=#{idx}
+	</delete>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

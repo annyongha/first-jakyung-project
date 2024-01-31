@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="g">
+
+	<!-- 메인페이지 상품조회 -->
+	<select id="goodsTotalSelectList" resultType="goods" parameterType="java.util.HashMap">	
+	SELECT IDX,G_NAME,G_PRICE,G_TITLE,CONTENT,REVIEW,SALE,DIVISION 
+	FROM (SELECT g.*, RANK() OVER(ORDER BY g.IDX DESC) AS "RANK" FROM GOODS g) 
+	WHERE "RANK"
+	BETWEEN #{minData} AND #{maxData}
+	</select>
+	
+	<!-- 상품 타입별 상품조회 -->
+	<select id="goodsTypeSelectList" resultType="goods" parameterType="java.util.HashMap">
+	SELECT IDX,G_NAME,G_PRICE,G_TITLE,CONTENT,REVIEW,SALE,DIVISION 
+	FROM (SELECT g.*, RANK() OVER(ORDER BY g.IDX DESC) AS "RANK" FROM GOODS g WHERE DIVISION = #{type}) 
+	WHERE "RANK" BETWEEN #{minData} AND #{maxData}
+	</select>
+	
+	<!-- 뭐엿더라? -->
+	<select id="goodsOnePage" resultType="goods" parameterType="int">
+	SELECT * FROM GOODS WHERE IDX = #{idx} 
+	</select>
+	
+	<!-- 메인페이지 상품 전체 개수 -->
+	<select id="goodsTotalCount" resultType="int">
+	SELECT COUNT(*) FROM GOODS
+	</select>
+	
+	<select id="recentlyUserProduct" parameterType="int" resultType="goods">
+	SELECT * FROM GOODS WHERE IDX=#{idx}
+	</select>
+	
+	<select id="typeGoodsTotalCount" parameterType="String" resultType="int">
+	SELECT COUNT(*) FROM GOODS WHERE DIVISION = #{type} 
+	</select>
+	
+	<insert id="goods_insert" parameterType="goods">
+		INSERT INTO GOODS (IDX, U_IDX, G_NAME, G_PRICE, G_TITLE, CONTENT, SALE,
+		DIVISION)
+		VALUES (GOODS_IDX.NEXTVAL,
+		#{u_idx},
+		#{g_name},
+		#{g_price},
+		#{g_title},
+		#{content},
+		#{sale},
+		#{division})
+	</insert>
+
+	<update id="goods_update" parameterType="goods">
+		UPDATE GOODS SET
+		G_NAME = #{g_name},
+		G_PRICE = #{g_price},
+		G_TITLE = #{g_title},
+		CONTENT = #{content},
+		SALE = #{sale},
+		DIVISION = #{division}
+		WHERE IDX = #{idx}
+	</update>
+
+	<delete id="goods_delete" parameterType="int">
+		DELETE FROM GOODS WHERE
+		IDX=#{idx}
+	</delete>
+
+	<select id="selectList" resultType="goods" parameterType="int">
+		SELECT IDX,G_NAME,G_PRICE,G_TITLE,CONTENT,SALE,DIVISION
+		FROM goods
+		WHERE u_idx = #{u_idx}
+	</select>
+
+	<select id="updateTotalSelectList" resultType="goods"
+		parameterType="java.util.HashMap">
+		SELECT t2.* FROM (SELECT t.*, RANK() OVER(ORDER BY IDX DESC) AS "RANK" FROM
+		(SELECT * FROM GOODS WHERE U_IDX = #{u_idx}) t) t2 WHERE "RANK" BETWEEN #{minData} AND
+		#{maxData}
+	</select>
+	
+	<!-- 메인페이지 상품 전체 개수 -->
+	<select id="updateTotalCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM GOODS WHERE U_IDX=#{u_idx}
+	</select>
+	
+	<delete id="member_delete" parameterType="int">
+		DELETE FROM GOODS WHERE
+		U_IDX=#{u_idx}
+	</delete>
+	
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

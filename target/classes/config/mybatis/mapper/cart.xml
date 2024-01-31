@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="c">
+<!-- mapper : DB에 쿼리문을 요청하고 결과를 돌려받는 속성파일 -->
+
+	<select id="cart_list" resultType="cart" parameterType="java.util.HashMap">
+			SELECT IDX,G_IDX,G_COUNT,G_PRICE,G_SIZE,C_ADDR
+	FROM (SELECT c.*, RANK() OVER(ORDER BY c.IDX ASC) AS "RANK" FROM CART c WHERE M_IDX = #{u_idx}) 
+	WHERE "RANK" BETWEEN #{minData} AND #{maxData}
+	</select>
+	
+	<!-- 장바구니 담기 -->
+	<insert id="cart_insert" parameterType="java.util.HashMap">
+	INSERT INTO CART(IDX,M_IDX,G_IDX,G_COUNT,G_PRICE,G_SIZE,C_ADDR,DEADLINE) 
+	VALUES(
+	CART_IDX.NEXTVAL,
+	#{user_idx},
+	#{goods_idx},
+	#{goods_count},
+	#{goods_price},
+	#{goods_size},
+	#{c_addr},
+	SYSDATE)
+	</insert>
+	
+		<delete id = "cart_delete" parameterType ="int">
+		DELETE FROM CART WHERE IDX=#{deleteIdx}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
